@@ -5,6 +5,11 @@
 *.so
 *.dylib
 
+# will skip config files too if real because my github is public only
+# *.ini
+# *.conf
+# *.cfg
+
 # Test binary, build with `go test -c`
 *.test
 

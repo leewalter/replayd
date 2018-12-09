@@ -1,3 +1,5 @@
+# base heavily on https://github.com/go-ini/ini
+
 package main
 
 import (
@@ -16,7 +18,7 @@ func main() {
 
 	// Classic read of values, default section can be represented as empty string
 	fmt.Println("App Mode:", cfg.Section("").Key("app_mode").String())
-	fmt.Println("Data Path:", cfg.Section("paths").Key("data").String())
+	fmt.Println("Tmp Data Path:", cfg.Section("paths").Key("tmp_data").String())
 
 	// Let's do some candidate value limitation
 	fmt.Println("Server Protocol:",
@@ -28,6 +30,10 @@ func main() {
 	// Try out auto-type conversion
 	fmt.Printf("Port Number: (%[1]T) %[1]d\n", cfg.Section("server").Key("http_port").MustInt(9999))
 	fmt.Printf("Enforce Domain: (%[1]T) %[1]v\n", cfg.Section("server").Key("enforce_domain").MustBool(false))
+
+	// select new debug_level value
+	fmt.Println("Debug Level:",
+		cfg.Section("debug").Key("debug_level").In("none", []string{"finest", "fine", "normal", "none"}))
 
 	// Now, make some changes and save it
 	cfg.Section("").Key("app_mode").SetValue("production")
